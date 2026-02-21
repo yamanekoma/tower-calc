@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -7,261 +8,127 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap');
 
-  :root {
-    --bg: #f5f4f0;
-    --white: #ffffff;
-    --accent: #1a6b4a;
-    --accent-light: #e8f5ee;
-    --text: #1a1a1a;
-    --muted: #888;
-    --border: #ddd;
-    --seg-color: #1a6b4a;
-  }
+:root {
+–bg: #f5f4f0;
+–white: #ffffff;
+–accent: #1a6b4a;
+–accent-light: #e8f5ee;
+–text: #1a1a1a;
+–muted: #888;
+–border: #ddd;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+- { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 300;
-    min-height: 100vh;
-    padding: 20px 16px 40px;
-  }
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘Noto Sans JP’, sans-serif;
+font-weight: 300;
+min-height: 100vh;
+padding: 20px 16px 40px;
+}
 
-  h1 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
+h1 { font-size: 1.1rem; font-weight: 700; color: var(–accent); margin-bottom: 4px; }
+.subtitle { font-size: 0.78rem; color: var(–muted); margin-bottom: 20px; }
 
-  .subtitle {
-    font-size: 0.78rem;
-    color: var(--muted);
-    margin-bottom: 20px;
-  }
+.card {
+background: var(–white);
+border-radius: 16px;
+padding: 20px;
+margin-bottom: 16px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
 
-  .card {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  }
+.card h2 {
+font-size: 0.72rem; font-weight: 700; color: var(–muted);
+letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px;
+}
 
-  .card h2 {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
+.section-label {
+font-size: 0.78rem; color: var(–muted);
+margin: 16px 0 10px; padding-bottom: 4px;
+border-bottom: 1px solid var(–border);
+}
 
-  .input-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
+.input-row {
+display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
 
-  .input-row label {
-    font-size: 0.85rem;
-    width: 140px;
-    flex-shrink: 0;
-    color: var(--text);
-  }
+.input-row label { font-size: 0.85rem; width: 140px; flex-shrink: 0; color: var(–text); }
 
-  .input-row input[type="number"] {
-    flex: 1;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--accent);
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 14px;
-    outline: none;
-    background: var(--white);
-    -webkit-appearance: none;
-    appearance: none;
-    transition: border-color 0.2s;
-  }
+.input-row input[type=“number”] {
+flex: 1; font-size: 1.2rem; font-weight: 700; color: var(–accent);
+border: 2px solid var(–border); border-radius: 10px; padding: 10px 14px;
+outline: none; background: var(–white);
+-webkit-appearance: none; appearance: none; transition: border-color 0.2s;
+}
+.input-row input[type=“number”]:focus { border-color: var(–accent); background: var(–accent-light); }
 
-  .input-row input[type="number"]:focus {
-    border-color: var(--accent);
-    background: var(--accent-light);
-  }
+.unit { font-size: 0.85rem; color: var(–muted); width: 28px; }
 
-  .unit {
-    font-size: 0.85rem;
-    color: var(--muted);
-    width: 28px;
-  }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
 
-  .mode-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 6px;
-  }
+.tog-btn {
+flex: 1; min-width: 100px; padding: 10px 8px; border-radius: 10px;
+border: 2px solid var(–border); background: var(–white);
+font-family: inherit; font-size: 0.82rem; color: var(–muted);
+cursor: pointer; text-align: center; transition: all 0.2s; font-weight: 400;
+}
+.tog-btn.active {
+border-color: var(–accent); background: var(–accent-light);
+color: var(–accent); font-weight: 700;
+}
 
-  .mode-btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 10px 8px;
-    border-radius: 10px;
-    border: 2px solid var(--border);
-    background: var(--white);
-    font-family: inherit;
-    font-size: 0.82rem;
-    color: var(--muted);
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s;
-    font-weight: 400;
-  }
+.hint { font-size: 0.72rem; color: var(–muted); line-height: 1.6; margin-top: 6px; margin-bottom: 10px; }
 
-  .mode-btn.active {
-    border-color: var(--accent);
-    background: var(--accent-light);
-    color: var(--accent);
-    font-weight: 700;
-  }
+.result-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+.result-header h2 { margin-bottom: 0; }
+.total-check { font-size: 0.75rem; color: var(–muted); margin-left: auto; }
+.total-check span { color: var(–accent); font-weight: 700; }
 
-  .mode-hint {
-    font-size: 0.72rem;
-    color: var(--muted);
-    line-height: 1.6;
-    margin-top: 8px;
-  }
+.seg-list { display: flex; flex-direction: column; gap: 8px; }
 
-  .result-header {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
+.seg-item {
+display: flex; align-items: center; gap: 10px;
+background: var(–bg); border-radius: 10px; padding: 10px 14px;
+}
+.seg-label { font-size: 0.78rem; color: var(–muted); width: 64px; flex-shrink: 0; }
+.seg-value { font-size: 1.15rem; font-weight: 700; color: var(–accent); width: 72px; text-align: right; flex-shrink: 0; }
+.seg-unit  { font-size: 0.78rem; color: var(–muted); margin-left: 2px; flex-shrink: 0; }
 
-  .result-header h2 {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 0;
-  }
+.seg-bar-wrap { flex: 1; background: var(–border); border-radius: 4px; height: 8px; overflow: hidden; }
+.seg-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(–accent), #4aaa80); transition: width 0.3s; }
 
-  .total-check {
-    font-size: 0.75rem;
-    color: var(--muted);
-    margin-left: auto;
-  }
+.preview-wrap { display: flex; justify-content: center; padding: 8px 0 4px; }
+canvas { border-radius: 8px; background: #f0f0ea; }
 
-  .total-check span {
-    color: var(--accent);
-    font-weight: 700;
-  }
+.save-btn {
+display: block; width: 100%; margin-top: 14px; padding: 12px;
+background: var(–accent); color: #fff; border: none; border-radius: 10px;
+font-family: inherit; font-size: 0.95rem; font-weight: 700;
+cursor: pointer; letter-spacing: 0.05em; transition: opacity 0.2s;
+}
+.save-btn:active { opacity: 0.7; }
 
-  .seg-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .seg-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--bg);
-    border-radius: 10px;
-    padding: 10px 14px;
-  }
-
-  .seg-label {
-    font-size: 0.78rem;
-    color: var(--muted);
-    width: 64px;
-    flex-shrink: 0;
-  }
-
-  .seg-value {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--accent);
-    width: 72px;
-    text-align: right;
-    flex-shrink: 0;
-  }
-
-  .seg-unit {
-    font-size: 0.78rem;
-    color: var(--muted);
-    margin-left: 2px;
-    flex-shrink: 0;
-  }
-
-  .seg-bar-wrap {
-    flex: 1;
-    background: var(--border);
-    border-radius: 4px;
-    height: 8px;
-    overflow: hidden;
-  }
-
-  .seg-bar {
-    height: 100%;
-    border-radius: 4px;
-    background: linear-gradient(90deg, var(--accent), #4aaa80);
-    transition: width 0.3s;
-  }
-
-  .preview-wrap {
-    display: flex;
-    justify-content: center;
-    padding: 8px 0 4px;
-  }
-
-  canvas {
-    border-radius: 8px;
-    background: #f0f0ea;
-  }
-
-  .save-btn {
-    display: block;
-    width: 100%;
-    margin-top: 14px;
-    padding: 12px;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: opacity 0.2s;
-  }
-  .save-btn:active { opacity: 0.7; }
-
-  .error {
-    color: #c0392b;
-    font-size: 0.82rem;
-    padding: 10px 14px;
-    background: #fdecea;
-    border-radius: 8px;
-    display: none;
-  }
+.error {
+color: #c0392b; font-size: 0.82rem; padding: 10px 14px;
+background: #fdecea; border-radius: 8px; display: none; margin-bottom: 10px;
+}
 </style>
+
 </head>
 <body>
 
 <h1>⚡ 段割り計算ツール</h1>
 <div class="subtitle">線の長さを指定した段数に分割します</div>
 
+<!-- 入力（くびれ含む） -->
+
 <div class="card">
   <h2>入力</h2>
+
+  <div class="section-label">▸ 基本設定</div>
   <div class="input-row">
     <label>線の全体の長さ</label>
     <input type="number" id="totalLen" value="200" min="1" step="0.1">
@@ -282,36 +149,57 @@
     <input type="number" id="widthTop" value="20" min="0" step="0.1">
     <span class="unit">mm</span>
   </div>
+
+  <div class="section-label">▸ くびれ設定</div>
+  <div class="btn-row">
+    <button class="tog-btn active" id="btnWaistNone">くびれなし</button>
+    <button class="tog-btn"        id="btnWaistOn">くびれあり</button>
+  </div>
+  <div id="waistInputs" style="display:none; margin-top:10px">
+    <div class="input-row">
+      <label>くびれ位置（下から何段目）</label>
+      <input type="number" id="waistSeg" value="3" min="1" step="1">
+      <span class="unit">段</span>
+    </div>
+    <div class="input-row">
+      <label>くびれの幅</label>
+      <input type="number" id="waistWidth" value="15" min="1" step="0.1">
+      <span class="unit">mm</span>
+    </div>
+    <div class="hint">指定した段の上端でいちど細くなり、そこから上端の幅へ広がります。</div>
+  </div>
 </div>
+
+<!-- 変化パターン -->
 
 <div class="card">
   <h2>間隔の変化パターン</h2>
-  <div class="mode-row">
-    <button class="mode-btn" data-mode="ratio">等比（自然な縮み）</button>
-    <button class="mode-btn active" data-mode="linear">等差（均等に縮小）</button>
+  <div class="btn-row">
+    <button class="tog-btn"        id="btnRatio">等比（自然な縮み）</button>
+    <button class="tog-btn active" id="btnLinear">等差（均等に縮小）</button>
   </div>
-  <div class="mode-hint" id="modeHint">
-    段ごとに一定の長さずつ均等に小さくなります。<br>なだらかで規則的な見た目になります。
-  </div>
+  <div class="hint" id="modeHint">段ごとに一定の長さずつ均等に小さくなります。なだらかで規則的な見た目になります。</div>
 
-  <div style="margin-top:14px;display:none" id="ratioInput">
+  <div id="ratioInput" style="display:none; margin-top:4px">
     <div class="input-row">
       <label>縮小比率</label>
       <input type="number" id="ratio" value="0.85" min="0.5" max="0.99" step="0.01">
       <span class="unit"></span>
     </div>
-    <div class="mode-hint">上の段 = 下の段 × この比率<br>例：0.85 なら上の段は下の段の 85% の長さ</div>
+    <div class="hint">上の段 = 下の段 × この比率　例：0.85 なら上の段は下の段の 85%</div>
   </div>
 
-  <div style="margin-top:14px" id="linearInput">
+  <div id="linearInput" style="margin-top:4px">
     <div class="input-row">
       <label>最上段 / 最下段</label>
       <input type="number" id="linearRatio" value="0.4" min="0.1" max="0.9" step="0.05">
       <span class="unit"></span>
     </div>
-    <div class="mode-hint">一番上の段が一番下の段の何倍か<br>例：0.4 なら最上段は最下段の 40% の長さ</div>
+    <div class="hint">例：0.4 なら最上段は最下段の 40% の長さ</div>
   </div>
 </div>
+
+<!-- 結果 -->
 
 <div class="card">
   <div class="result-header">
@@ -322,6 +210,8 @@
   <div class="seg-list" id="segList"></div>
 </div>
 
+<!-- プレビュー -->
+
 <div class="card">
   <h2>プレビュー</h2>
   <div class="preview-wrap">
@@ -331,36 +221,62 @@
 </div>
 
 <script>
-  let mode = 'linear';
+  // ── 状態 ──────────────────────────────────────
+  let mode     = 'linear';
+  let hasWaist = false;
 
-  document.querySelectorAll('.mode-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      mode = btn.dataset.mode;
-      document.getElementById('ratioInput').style.display = mode === 'ratio' ? '' : 'none';
-      document.getElementById('linearInput').style.display = mode === 'linear' ? '' : 'none';
-      document.getElementById('modeHint').textContent = mode === 'ratio'
-        ? '上の段が下の段の一定比率で小さくなります。\n実際の鉄塔に近い自然な見た目になりやすいです。'
-        : '段ごとに一定の長さずつ均等に小さくなります。\nなだらかで規則的な見た目になります。';
-      calc();
-    });
+  // ── くびれボタン（他のボタンに干渉しないよう個別に定義）──
+  document.getElementById('btnWaistNone').addEventListener('click', () => {
+    hasWaist = false;
+    document.getElementById('btnWaistNone').classList.add('active');
+    document.getElementById('btnWaistOn').classList.remove('active');
+    document.getElementById('waistInputs').style.display = 'none';
+    calc();
+  });
+  document.getElementById('btnWaistOn').addEventListener('click', () => {
+    hasWaist = true;
+    document.getElementById('btnWaistOn').classList.add('active');
+    document.getElementById('btnWaistNone').classList.remove('active');
+    document.getElementById('waistInputs').style.display = '';
+    calc();
   });
 
-  ['totalLen','numSeg','ratio','linearRatio','widthBottom','widthTop'].forEach(id => {
+  // ── 変化パターンボタン ────────────────────────
+  document.getElementById('btnRatio').addEventListener('click', () => {
+    mode = 'ratio';
+    document.getElementById('btnRatio').classList.add('active');
+    document.getElementById('btnLinear').classList.remove('active');
+    document.getElementById('ratioInput').style.display = '';
+    document.getElementById('linearInput').style.display = 'none';
+    document.getElementById('modeHint').textContent = '上の段が下の段の一定比率で小さくなります。自然な縮み方になります。';
+    calc();
+  });
+  document.getElementById('btnLinear').addEventListener('click', () => {
+    mode = 'linear';
+    document.getElementById('btnLinear').classList.add('active');
+    document.getElementById('btnRatio').classList.remove('active');
+    document.getElementById('ratioInput').style.display = 'none';
+    document.getElementById('linearInput').style.display = '';
+    document.getElementById('modeHint').textContent = '段ごとに一定の長さずつ均等に小さくなります。なだらかで規則的な見た目になります。';
+    calc();
+  });
+
+  // ── 数値入力 ──────────────────────────────────
+  ['totalLen','numSeg','widthBottom','widthTop','waistSeg','waistWidth','ratio','linearRatio'].forEach(id => {
     document.getElementById(id).addEventListener('input', calc);
   });
 
+  // ── 計算メイン ────────────────────────────────
   function calc() {
     const total = parseFloat(document.getElementById('totalLen').value);
-    const n = Math.min(30, Math.max(2, parseInt(document.getElementById('numSeg').value)));
+    const n     = Math.min(30, Math.max(2, parseInt(document.getElementById('numSeg').value) || 2));
     const errEl = document.getElementById('errorMsg');
 
-    if (!total || total <= 0 || !n) { errEl.style.display = 'block'; return; }
+    if (!total || total <= 0) { errEl.style.display = 'block'; return; }
     errEl.style.display = 'none';
 
+    // 段の高さリスト（下から順、index 0 = 最下段）
     let heights = [];
-
     if (mode === 'ratio') {
       const r = parseFloat(document.getElementById('ratio').value) || 0.85;
       if (r >= 1 || r <= 0) return;
@@ -368,59 +284,94 @@
       for (let i = 0; i < n; i++) heights.push(a * Math.pow(r, i));
     } else {
       const lr = parseFloat(document.getElementById('linearRatio').value) || 0.4;
-      const a = total / (n * (1 - (1 - lr) / 2));
-      const d = a * (1 - lr) / (n - 1);
+      const a  = total / (n * (1 - (1 - lr) / 2));
+      const d  = a * (1 - lr) / (n - 1);
       for (let i = 0; i < n; i++) heights.push(a - d * i);
     }
 
+    // テーブル
     const list = document.getElementById('segList');
     list.innerHTML = '';
     const maxH = heights[0];
     let sum = 0;
-
     heights.forEach((h, i) => {
       sum += h;
-      const pct = (h / maxH * 100).toFixed(0);
       const div = document.createElement('div');
       div.className = 'seg-item';
       div.innerHTML = `
         <div class="seg-label">第${i+1}段目</div>
         <div class="seg-value">${h.toFixed(2)}</div>
         <div class="seg-unit">mm</div>
-        <div class="seg-bar-wrap"><div class="seg-bar" style="width:${pct}%"></div></div>
+        <div class="seg-bar-wrap"><div class="seg-bar" style="width:${(h/maxH*100).toFixed(0)}%"></div></div>
       `;
       list.appendChild(div);
     });
-
     document.getElementById('totalDisplay').textContent = sum.toFixed(2);
 
-    const cv = document.getElementById('cv');
+    drawPreview(heights, n);
+  }
+
+  // ── プレビュー描画 ────────────────────────────
+  function drawPreview(heights, n) {
+    const cv  = document.getElementById('cv');
     const ctx = cv.getContext('2d');
-    ctx.clearRect(0, 0, cv.width, cv.height);
-    const pw = cv.width, ph = cv.height;
-    const pad = 10;
-    const scaleY = (ph - pad*2) / total;
+    const pw  = cv.width, ph = cv.height;
+    ctx.clearRect(0, 0, pw, ph);
 
-    const wBottom = parseFloat(document.getElementById('widthBottom').value) || 100;
-    const wTop    = parseFloat(document.getElementById('widthTop').value)    || 20;
-    const wMax = Math.max(wBottom, wTop);
-    const canvasMaxW = pw - 8;
-    const wScale = canvasMaxW / wMax;
-    const maxW = wBottom * wScale;
-    const minW = wTop * wScale;
+    const pad    = 20;
+    const total  = heights.reduce((a, b) => a + b, 0);
+    const scaleY = (ph - pad * 2) / total;
 
-    const getWidth = (yPos) => {
-      const t = (yPos - pad) / (ph - pad * 2);
-      return minW + (maxW - minW) * t;
-    };
+    const wBottom  = parseFloat(document.getElementById('widthBottom').value) || 100;
+    const wTop     = parseFloat(document.getElementById('widthTop').value)    || 20;
+    const waistWmm = hasWaist ? (parseFloat(document.getElementById('waistWidth').value) || 15) : 0;
+    const waistAt  = hasWaist
+      ? Math.min(n - 1, Math.max(1, parseInt(document.getElementById('waistSeg').value) || 3))
+      : 0;
+
+    // 各境界のY座標を事前に計算（canvas座標：下が大きい）
+    // boundaryY[0] = 最下端, boundaryY[n] = 最上端
+    const boundaryY = [ph - pad];
+    for (let i = 0; i < n; i++) {
+      boundaryY.push(boundaryY[i] - heights[i] * scaleY);
+    }
+
+    const totalH = ph - pad * 2; // canvas上の全高(px)
+
+    // Y座標(canvas)から幅(mm)を求める
+    // Y座標が小さいほど上（t=1）、大きいほど下（t=0）
+    function widthAtY(y) {
+      const t = (ph - pad - y) / totalH; // 0=最下端, 1=最上端
+
+      if (!hasWaist) {
+        return wBottom + (wTop - wBottom) * t;
+      }
+
+      // くびれ境界のY座標からtを計算
+      const tWaist = (ph - pad - boundaryY[waistAt]) / totalH;
+
+      if (t <= tWaist) {
+        // 下区間：0→tWaist で wBottom→waistWmm
+        return wBottom + (waistWmm - wBottom) * (t / tWaist);
+      } else {
+        // 上区間：tWaist→1 で waistWmm→wTop
+        return waistWmm + (wTop - waistWmm) * ((t - tWaist) / (1 - tWaist));
+      }
+    }
+
+    // キャンバス幅スケール
+    const wMax   = Math.max(wBottom, wTop, hasWaist ? waistWmm : 0);
+    const wScale = (pw - pad * 2) / wMax;
 
     const cx = pw / 2;
     let y = ph - pad;
-    heights.forEach((h) => {
-      const segH = h * scaleY;
-      const bw = getWidth(y);
-      const tw = getWidth(y - segH);
 
+    heights.forEach((h, i) => {
+      const segH = h * scaleY;
+      const bw   = widthAtY(boundaryY[i])     * wScale;
+      const tw   = widthAtY(boundaryY[i + 1]) * wScale;
+
+      // 台形
       ctx.beginPath();
       ctx.moveTo(cx - bw/2, y);
       ctx.lineTo(cx + bw/2, y);
@@ -431,6 +382,7 @@
       ctx.lineWidth = 6;
       ctx.stroke();
 
+      // 交差線
       ctx.beginPath();
       ctx.moveTo(cx - bw/2, y);
       ctx.lineTo(cx + tw/2, y - segH);
@@ -444,15 +396,16 @@
     });
   }
 
+  // ── 保存 ──────────────────────────────────────
   document.getElementById('saveBtn').addEventListener('click', () => {
-    const cv = document.getElementById('cv');
     const link = document.createElement('a');
     link.download = 'tower-preview.png';
-    link.href = cv.toDataURL('image/png');
+    link.href = document.getElementById('cv').toDataURL('image/png');
     link.click();
   });
 
   calc();
 </script>
+
 </body>
 </html>
