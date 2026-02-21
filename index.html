@@ -25,129 +25,295 @@ background: var(–bg);
 color: var(–text);
 font-family: ‘Noto Sans JP’, sans-serif;
 font-weight: 300;
-min-height: 100vh;
-padding: 20px 16px 40px;
+height: 100dvh;
+display: flex;
+flex-direction: column;
+overflow: hidden;
 }
 
-h1 { font-size: 1.1rem; font-weight: 700; color: var(–accent); margin-bottom: 4px; }
-.subtitle { font-size: 0.78rem; color: var(–muted); margin-bottom: 20px; }
+/* ヘッダー */
+.header {
+padding: 12px 16px 8px;
+flex-shrink: 0;
+}
+h1 { font-size: 1rem; font-weight: 700; color: var(–accent); }
+.subtitle { font-size: 0.72rem; color: var(–muted); }
 
-.card {
+/* メインレイアウト */
+.main {
+display: flex;
+flex: 1;
+overflow: hidden;
+gap: 0;
+}
+
+/* 左：スクロール可能な入力エリア */
+.pane-left {
+flex: 1;
+overflow-y: auto;
+padding: 8px 12px 24px;
+-webkit-overflow-scrolling: touch;
+}
+
+/* 右：固定プレビュー */
+.pane-right {
+width: 120px;
+flex-shrink: 0;
 background: var(–white);
-border-radius: 16px;
-padding: 20px;
-margin-bottom: 16px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+border-left: 1px solid var(–border);
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 10px 6px;
+gap: 10px;
 }
 
-.card h2 {
-font-size: 0.72rem; font-weight: 700; color: var(–muted);
-letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px;
+.pane-right h2 {
+font-size: 0.65rem;
+font-weight: 700;
+color: var(–muted);
+letter-spacing: 0.08em;
+text-transform: uppercase;
 }
 
-.section-label {
-font-size: 0.78rem; color: var(–muted);
-margin: 16px 0 10px; padding-bottom: 4px;
-border-bottom: 1px solid var(–border);
+canvas {
+border-radius: 6px;
+background: #f0f0ea;
+max-height: calc(100dvh - 120px);
+width: 90px;
 }
-
-.input-row {
-display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
-}
-
-.input-row label { font-size: 0.85rem; width: 140px; flex-shrink: 0; color: var(–text); }
-
-.input-row input[type=“number”] {
-flex: 1; font-size: 1.2rem; font-weight: 700; color: var(–accent);
-border: 2px solid var(–border); border-radius: 10px; padding: 10px 14px;
-outline: none; background: var(–white);
--webkit-appearance: none; appearance: none; transition: border-color 0.2s;
-}
-.input-row input[type=“number”]:focus { border-color: var(–accent); background: var(–accent-light); }
-
-.unit { font-size: 0.85rem; color: var(–muted); width: 28px; }
-
-.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
-
-.tog-btn {
-flex: 1; min-width: 100px; padding: 10px 8px; border-radius: 10px;
-border: 2px solid var(–border); background: var(–white);
-font-family: inherit; font-size: 0.82rem; color: var(–muted);
-cursor: pointer; text-align: center; transition: all 0.2s; font-weight: 400;
-}
-.tog-btn.active {
-border-color: var(–accent); background: var(–accent-light);
-color: var(–accent); font-weight: 700;
-}
-
-.hint { font-size: 0.72rem; color: var(–muted); line-height: 1.6; margin-top: 6px; margin-bottom: 10px; }
-
-.result-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
-.result-header h2 { margin-bottom: 0; }
-.total-check { font-size: 0.75rem; color: var(–muted); margin-left: auto; }
-.total-check span { color: var(–accent); font-weight: 700; }
-
-.seg-list { display: flex; flex-direction: column; gap: 8px; }
-
-.seg-item {
-display: flex; align-items: center; gap: 10px;
-background: var(–bg); border-radius: 10px; padding: 10px 14px;
-}
-.seg-label { font-size: 0.78rem; color: var(–muted); width: 64px; flex-shrink: 0; }
-.seg-value { font-size: 1.15rem; font-weight: 700; color: var(–accent); width: 72px; text-align: right; flex-shrink: 0; }
-.seg-unit  { font-size: 0.78rem; color: var(–muted); margin-left: 2px; flex-shrink: 0; }
-
-.seg-bar-wrap { flex: 1; background: var(–border); border-radius: 4px; height: 8px; overflow: hidden; }
-.seg-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(–accent), #4aaa80); transition: width 0.3s; }
-
-.preview-wrap { display: flex; justify-content: center; padding: 8px 0 4px; }
-canvas { border-radius: 8px; background: #f0f0ea; }
 
 .save-btn {
-display: block; width: 100%; margin-top: 14px; padding: 12px;
-background: var(–accent); color: #fff; border: none; border-radius: 10px;
-font-family: inherit; font-size: 0.95rem; font-weight: 700;
-cursor: pointer; letter-spacing: 0.05em; transition: opacity 0.2s;
+width: 100%;
+padding: 8px 4px;
+background: var(–accent);
+color: #fff;
+border: none;
+border-radius: 8px;
+font-family: inherit;
+font-size: 0.7rem;
+font-weight: 700;
+cursor: pointer;
+text-align: center;
+transition: opacity 0.2s;
+line-height: 1.4;
 }
 .save-btn:active { opacity: 0.7; }
 
+/* カード */
+.card {
+background: var(–white);
+border-radius: 12px;
+padding: 14px;
+margin-bottom: 10px;
+box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+
+.card h2 {
+font-size: 0.68rem;
+font-weight: 700;
+color: var(–muted);
+letter-spacing: 0.08em;
+text-transform: uppercase;
+margin-bottom: 12px;
+}
+
+.section-label {
+font-size: 0.72rem;
+color: var(–muted);
+margin: 12px 0 8px;
+padding-bottom: 3px;
+border-bottom: 1px solid var(–border);
+}
+
+/* 入力行（ラベル＋数値＋スライダー） */
+.field {
+margin-bottom: 12px;
+}
+
+.field-top {
+display: flex;
+align-items: center;
+gap: 6px;
+margin-bottom: 4px;
+}
+
+.field-top label {
+font-size: 0.8rem;
+flex: 1;
+color: var(–text);
+}
+
+.field-top input[type=“number”] {
+width: 72px;
+flex-shrink: 0;
+font-size: 1rem;
+font-weight: 700;
+color: var(–accent);
+border: 2px solid var(–border);
+border-radius: 8px;
+padding: 5px 8px;
+outline: none;
+background: var(–white);
+-webkit-appearance: none;
+appearance: none;
+transition: border-color 0.2s;
+text-align: right;
+}
+.field-top input[type=“number”]:focus {
+border-color: var(–accent);
+background: var(–accent-light);
+}
+
+.unit {
+font-size: 0.78rem;
+color: var(–muted);
+width: 22px;
+flex-shrink: 0;
+}
+
+/* スライダー */
+input[type=“range”] {
+width: 100%;
+height: 4px;
+-webkit-appearance: none;
+appearance: none;
+background: var(–border);
+border-radius: 2px;
+outline: none;
+cursor: pointer;
+}
+input[type=“range”]::-webkit-slider-thumb {
+-webkit-appearance: none;
+width: 22px;
+height: 22px;
+border-radius: 50%;
+background: var(–accent);
+border: 3px solid var(–white);
+box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+cursor: pointer;
+}
+
+/* トグルボタン */
+.btn-row { display: flex; gap: 6px; margin-bottom: 8px; }
+
+.tog-btn {
+flex: 1;
+padding: 8px 6px;
+border-radius: 8px;
+border: 2px solid var(–border);
+background: var(–white);
+font-family: inherit;
+font-size: 0.75rem;
+color: var(–muted);
+cursor: pointer;
+text-align: center;
+transition: all 0.2s;
+font-weight: 400;
+}
+.tog-btn.active {
+border-color: var(–accent);
+background: var(–accent-light);
+color: var(–accent);
+font-weight: 700;
+}
+
+.hint {
+font-size: 0.68rem;
+color: var(–muted);
+line-height: 1.5;
+margin-top: 4px;
+margin-bottom: 6px;
+}
+
+/* 結果リスト */
+.seg-list { display: flex; flex-direction: column; gap: 6px; }
+
+.seg-item {
+display: flex;
+align-items: center;
+gap: 8px;
+background: var(–bg);
+border-radius: 8px;
+padding: 7px 10px;
+}
+.seg-label { font-size: 0.72rem; color: var(–muted); width: 56px; flex-shrink: 0; }
+.seg-value { font-size: 1rem; font-weight: 700; color: var(–accent); width: 60px; text-align: right; flex-shrink: 0; }
+.seg-unit  { font-size: 0.72rem; color: var(–muted); margin-left: 2px; flex-shrink: 0; }
+.seg-bar-wrap { flex: 1; background: var(–border); border-radius: 3px; height: 6px; overflow: hidden; }
+.seg-bar { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(–accent), #4aaa80); }
+
+.total-row {
+display: flex;
+justify-content: flex-end;
+font-size: 0.75rem;
+color: var(–muted);
+margin-top: 6px;
+}
+.total-row span { color: var(–accent); font-weight: 700; margin-left: 4px; }
+
 .error {
-color: #c0392b; font-size: 0.82rem; padding: 10px 14px;
-background: #fdecea; border-radius: 8px; display: none; margin-bottom: 10px;
+color: #c0392b; font-size: 0.78rem;
+padding: 8px 12px; background: #fdecea;
+border-radius: 8px; display: none; margin-bottom: 8px;
 }
 </style>
 
 </head>
 <body>
 
-<h1>⚡ 段割り計算ツール</h1>
-<div class="subtitle">線の長さを指定した段数に分割します</div>
+<div class="header">
+  <h1>⚡ 段割り計算ツール</h1>
+  <div class="subtitle">線の長さを指定した段数に分割します</div>
+</div>
 
-<!-- 入力（くびれ含む） -->
+<div class="main">
 
+  <!-- 左：入力エリア -->
+
+  <div class="pane-left">
+
+```
+<!-- 入力カード -->
 <div class="card">
   <h2>入力</h2>
 
   <div class="section-label">▸ 基本設定</div>
-  <div class="input-row">
-    <label>線の全体の長さ</label>
-    <input type="number" id="totalLen" value="200" min="1" step="0.1">
-    <span class="unit">mm</span>
+
+  <div class="field">
+    <div class="field-top">
+      <label>全体の長さ</label>
+      <input type="number" id="totalLen" value="200" min="10" max="2000" step="1">
+      <span class="unit">mm</span>
+    </div>
+    <input type="range" id="totalLenR" min="10" max="2000" step="1" value="200">
   </div>
-  <div class="input-row">
-    <label>分割する段数</label>
-    <input type="number" id="numSeg" value="8" min="2" max="30" step="1">
-    <span class="unit">段</span>
+
+  <div class="field">
+    <div class="field-top">
+      <label>分割する段数</label>
+      <input type="number" id="numSeg" value="8" min="2" max="30" step="1">
+      <span class="unit">段</span>
+    </div>
+    <input type="range" id="numSegR" min="2" max="30" step="1" value="8">
   </div>
-  <div class="input-row">
-    <label>下端の幅</label>
-    <input type="number" id="widthBottom" value="100" min="1" step="0.1">
-    <span class="unit">mm</span>
+
+  <div class="field">
+    <div class="field-top">
+      <label>下端の幅</label>
+      <input type="number" id="widthBottom" value="100" min="1" max="500" step="1">
+      <span class="unit">mm</span>
+    </div>
+    <input type="range" id="widthBottomR" min="1" max="500" step="1" value="100">
   </div>
-  <div class="input-row">
-    <label>上端の幅</label>
-    <input type="number" id="widthTop" value="20" min="0" step="0.1">
-    <span class="unit">mm</span>
+
+  <div class="field">
+    <div class="field-top">
+      <label>上端の幅</label>
+      <input type="number" id="widthTop" value="20" min="0" max="500" step="1">
+      <span class="unit">mm</span>
+    </div>
+    <input type="range" id="widthTopR" min="0" max="500" step="1" value="20">
   </div>
 
   <div class="section-label">▸ くびれ設定</div>
@@ -155,77 +321,122 @@ background: #fdecea; border-radius: 8px; display: none; margin-bottom: 10px;
     <button class="tog-btn active" id="btnWaistNone">くびれなし</button>
     <button class="tog-btn"        id="btnWaistOn">くびれあり</button>
   </div>
-  <div id="waistInputs" style="display:none; margin-top:10px">
-    <div class="input-row">
-      <label>くびれ位置（下から何段目）</label>
-      <input type="number" id="waistSeg" value="3" min="1" step="1">
-      <span class="unit">段</span>
+
+  <div id="waistInputs" style="display:none">
+    <div class="field">
+      <div class="field-top">
+        <label>くびれ位置（下から何段目）</label>
+        <input type="number" id="waistSeg" value="3" min="1" max="29" step="1">
+        <span class="unit">段</span>
+      </div>
+      <input type="range" id="waistSegR" min="1" max="29" step="1" value="3">
     </div>
-    <div class="input-row">
-      <label>くびれの幅</label>
-      <input type="number" id="waistWidth" value="15" min="1" step="0.1">
-      <span class="unit">mm</span>
+    <div class="field">
+      <div class="field-top">
+        <label>くびれの幅</label>
+        <input type="number" id="waistWidth" value="15" min="1" max="500" step="1">
+        <span class="unit">mm</span>
+      </div>
+      <input type="range" id="waistWidthR" min="1" max="500" step="1" value="15">
     </div>
-    <div class="hint">指定した段の上端でいちど細くなり、そこから上端の幅へ広がります。</div>
   </div>
 </div>
 
 <!-- 変化パターン -->
-
 <div class="card">
   <h2>間隔の変化パターン</h2>
   <div class="btn-row">
-    <button class="tog-btn"        id="btnRatio">等比（自然な縮み）</button>
-    <button class="tog-btn active" id="btnLinear">等差（均等に縮小）</button>
+    <button class="tog-btn"        id="btnRatio">等比</button>
+    <button class="tog-btn active" id="btnLinear">等差</button>
   </div>
-  <div class="hint" id="modeHint">段ごとに一定の長さずつ均等に小さくなります。なだらかで規則的な見た目になります。</div>
+  <div class="hint" id="modeHint">段ごとに一定の長さずつ均等に小さくなります。</div>
 
-  <div id="ratioInput" style="display:none; margin-top:4px">
-    <div class="input-row">
-      <label>縮小比率</label>
-      <input type="number" id="ratio" value="0.85" min="0.5" max="0.99" step="0.01">
-      <span class="unit"></span>
+  <div id="ratioInput" style="display:none">
+    <div class="field">
+      <div class="field-top">
+        <label>縮小比率</label>
+        <input type="number" id="ratio" value="0.85" min="0.5" max="0.99" step="0.01">
+        <span class="unit"></span>
+      </div>
+      <input type="range" id="ratioR" min="50" max="99" step="1" value="85">
+      <div class="hint">上の段 = 下の段 × 比率（例：0.85 → 85%）</div>
     </div>
-    <div class="hint">上の段 = 下の段 × この比率　例：0.85 なら上の段は下の段の 85%</div>
   </div>
 
-  <div id="linearInput" style="margin-top:4px">
-    <div class="input-row">
-      <label>最上段 / 最下段</label>
-      <input type="number" id="linearRatio" value="0.4" min="0.1" max="0.9" step="0.05">
-      <span class="unit"></span>
+  <div id="linearInput">
+    <div class="field">
+      <div class="field-top">
+        <label>最上段 ÷ 最下段</label>
+        <input type="number" id="linearRatio" value="0.4" min="0.1" max="0.9" step="0.01">
+        <span class="unit"></span>
+      </div>
+      <input type="range" id="linearRatioR" min="10" max="90" step="1" value="40">
+      <div class="hint">例：0.4 → 最上段は最下段の 40%</div>
     </div>
-    <div class="hint">例：0.4 なら最上段は最下段の 40% の長さ</div>
   </div>
 </div>
 
 <!-- 結果 -->
-
 <div class="card">
-  <div class="result-header">
-    <h2>計算結果（下から順）</h2>
-    <div class="total-check">合計 <span id="totalDisplay">—</span> mm</div>
-  </div>
+  <h2>計算結果（下から順）</h2>
   <div class="error" id="errorMsg">値を確認してください</div>
   <div class="seg-list" id="segList"></div>
+  <div class="total-row">合計<span id="totalDisplay">—</span> mm</div>
 </div>
+```
 
-<!-- プレビュー -->
+  </div><!-- /pane-left -->
 
-<div class="card">
-  <h2>プレビュー</h2>
-  <div class="preview-wrap">
-    <canvas id="cv" width="400" height="1200" style="width:100px;height:300px;"></canvas>
+  <!-- 右：固定プレビュー -->
+
+  <div class="pane-right">
+    <h2>Preview</h2>
+    <canvas id="cv" width="270" height="900"></canvas>
+    <button class="save-btn" id="saveBtn">📥 PNG保存</button>
   </div>
-  <button class="save-btn" id="saveBtn">📥 画像として保存（PNG）</button>
-</div>
+
+</div><!-- /main -->
 
 <script>
-  // ── 状態 ──────────────────────────────────────
   let mode     = 'linear';
   let hasWaist = false;
 
-  // ── くびれボタン（他のボタンに干渉しないよう個別に定義）──
+  // ── スライダーと数値入力の同期 ──────────────────
+  // 整数系（1:1対応）
+  const intPairs = [
+    ['totalLen',    'totalLenR'],
+    ['numSeg',      'numSegR'],
+    ['widthBottom', 'widthBottomR'],
+    ['widthTop',    'widthTopR'],
+    ['waistSeg',    'waistSegR'],
+    ['waistWidth',  'waistWidthR'],
+  ];
+  intPairs.forEach(([numId, rangeId]) => {
+    const num   = document.getElementById(numId);
+    const range = document.getElementById(rangeId);
+    num.addEventListener('input', () => { range.value = num.value; calc(); });
+    range.addEventListener('input', () => { num.value = range.value; calc(); });
+  });
+
+  // 小数系（スライダーは×100で保持）
+  const floatPairs = [
+    ['ratio',        'ratioR',        100],
+    ['linearRatio',  'linearRatioR',  100],
+  ];
+  floatPairs.forEach(([numId, rangeId, scale]) => {
+    const num   = document.getElementById(numId);
+    const range = document.getElementById(rangeId);
+    num.addEventListener('input', () => {
+      range.value = Math.round(parseFloat(num.value) * scale);
+      calc();
+    });
+    range.addEventListener('input', () => {
+      num.value = (parseInt(range.value) / scale).toFixed(2);
+      calc();
+    });
+  });
+
+  // ── くびれボタン ──────────────────────────────
   document.getElementById('btnWaistNone').addEventListener('click', () => {
     hasWaist = false;
     document.getElementById('btnWaistNone').classList.add('active');
@@ -248,7 +459,7 @@ background: #fdecea; border-radius: 8px; display: none; margin-bottom: 10px;
     document.getElementById('btnLinear').classList.remove('active');
     document.getElementById('ratioInput').style.display = '';
     document.getElementById('linearInput').style.display = 'none';
-    document.getElementById('modeHint').textContent = '上の段が下の段の一定比率で小さくなります。自然な縮み方になります。';
+    document.getElementById('modeHint').textContent = '上の段が下の段の一定比率で小さくなります。';
     calc();
   });
   document.getElementById('btnLinear').addEventListener('click', () => {
@@ -257,16 +468,11 @@ background: #fdecea; border-radius: 8px; display: none; margin-bottom: 10px;
     document.getElementById('btnRatio').classList.remove('active');
     document.getElementById('ratioInput').style.display = 'none';
     document.getElementById('linearInput').style.display = '';
-    document.getElementById('modeHint').textContent = '段ごとに一定の長さずつ均等に小さくなります。なだらかで規則的な見た目になります。';
+    document.getElementById('modeHint').textContent = '段ごとに一定の長さずつ均等に小さくなります。';
     calc();
   });
 
-  // ── 数値入力 ──────────────────────────────────
-  ['totalLen','numSeg','widthBottom','widthTop','waistSeg','waistWidth','ratio','linearRatio'].forEach(id => {
-    document.getElementById(id).addEventListener('input', calc);
-  });
-
-  // ── 計算メイン ────────────────────────────────
+  // ── 計算 ──────────────────────────────────────
   function calc() {
     const total = parseFloat(document.getElementById('totalLen').value);
     const n     = Math.min(30, Math.max(2, parseInt(document.getElementById('numSeg').value) || 2));
@@ -275,7 +481,15 @@ background: #fdecea; border-radius: 8px; display: none; margin-bottom: 10px;
     if (!total || total <= 0) { errEl.style.display = 'block'; return; }
     errEl.style.display = 'none';
 
-    // 段の高さリスト（下から順、index 0 = 最下段）
+    // くびれのスライダー最大値を段数に合わせる
+    const waistSegR = document.getElementById('waistSegR');
+    waistSegR.max = n - 1;
+    const waistSegNum = document.getElementById('waistSeg');
+    if (parseInt(waistSegNum.value) >= n) {
+      waistSegNum.value = n - 1;
+      waistSegR.value   = n - 1;
+    }
+
     let heights = [];
     if (mode === 'ratio') {
       const r = parseFloat(document.getElementById('ratio').value) || 0.85;
@@ -329,40 +543,29 @@ background: #fdecea; border-radius: 8px; display: none; margin-bottom: 10px;
       ? Math.min(n - 1, Math.max(1, parseInt(document.getElementById('waistSeg').value) || 3))
       : 0;
 
-    // 各境界のY座標を事前に計算（canvas座標：下が大きい）
-    // boundaryY[0] = 最下端, boundaryY[n] = 最上端
+    // 各境界のY座標（canvas座標）を事前計算
     const boundaryY = [ph - pad];
     for (let i = 0; i < n; i++) {
       boundaryY.push(boundaryY[i] - heights[i] * scaleY);
     }
+    const totalPx = ph - pad * 2;
 
-    const totalH = ph - pad * 2; // canvas上の全高(px)
-
-    // Y座標(canvas)から幅(mm)を求める
-    // Y座標が小さいほど上（t=1）、大きいほど下（t=0）
+    // Y座標(canvas)から幅(mm)を返す（t=0:最下端 t=1:最上端）
     function widthAtY(y) {
-      const t = (ph - pad - y) / totalH; // 0=最下端, 1=最上端
-
+      const t = (ph - pad - y) / totalPx;
       if (!hasWaist) {
         return wBottom + (wTop - wBottom) * t;
       }
-
-      // くびれ境界のY座標からtを計算
-      const tWaist = (ph - pad - boundaryY[waistAt]) / totalH;
-
+      const tWaist = (ph - pad - boundaryY[waistAt]) / totalPx;
       if (t <= tWaist) {
-        // 下区間：0→tWaist で wBottom→waistWmm
         return wBottom + (waistWmm - wBottom) * (t / tWaist);
       } else {
-        // 上区間：tWaist→1 で waistWmm→wTop
         return waistWmm + (wTop - waistWmm) * ((t - tWaist) / (1 - tWaist));
       }
     }
 
-    // キャンバス幅スケール
     const wMax   = Math.max(wBottom, wTop, hasWaist ? waistWmm : 0);
     const wScale = (pw - pad * 2) / wMax;
-
     const cx = pw / 2;
     let y = ph - pad;
 
@@ -371,7 +574,6 @@ background: #fdecea; border-radius: 8px; display: none; margin-bottom: 10px;
       const bw   = widthAtY(boundaryY[i])     * wScale;
       const tw   = widthAtY(boundaryY[i + 1]) * wScale;
 
-      // 台形
       ctx.beginPath();
       ctx.moveTo(cx - bw/2, y);
       ctx.lineTo(cx + bw/2, y);
@@ -382,7 +584,6 @@ background: #fdecea; border-radius: 8px; display: none; margin-bottom: 10px;
       ctx.lineWidth = 6;
       ctx.stroke();
 
-      // 交差線
       ctx.beginPath();
       ctx.moveTo(cx - bw/2, y);
       ctx.lineTo(cx + tw/2, y - segH);
