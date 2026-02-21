@@ -30,16 +30,15 @@ font-family: ‘Noto Sans JP’, sans-serif;
 font-weight: 300;
 }
 
-/* ─── 全体レイアウト ─── */
 .layout {
 display: flex;
 height: 100dvh;
 overflow: hidden;
 }
 
-/* 左：入力パネル（スクロール可） */
+/* 左：入力パネル */
 .panel-left {
-width: 55%;
+width: 58%;
 display: flex;
 flex-direction: column;
 overflow: hidden;
@@ -47,133 +46,124 @@ border-right: 1px solid var(–border);
 }
 
 .panel-header {
-padding: 14px 20px 10px;
+padding: 12px 20px 10px;
 flex-shrink: 0;
 border-bottom: 1px solid var(–border);
 background: var(–white);
 }
-.panel-header h1 {
-font-size: 1.05rem;
-font-weight: 700;
-color: var(–accent);
-}
-.panel-header p {
-font-size: 0.72rem;
-color: var(–muted);
-margin-top: 2px;
-}
+.panel-header h1 { font-size: 1rem; font-weight: 700; color: var(–accent); }
+.panel-header p  { font-size: 0.7rem; color: var(–muted); margin-top: 2px; }
 
 .scroll-area {
 flex: 1;
 overflow-y: auto;
-padding: 14px 16px 40px;
+padding: 12px 16px 40px;
 -webkit-overflow-scrolling: touch;
 }
 
-/* 右：プレビューパネル */
+/* 右：プレビュー */
 .panel-right {
 flex: 1;
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: space-between;
-padding: 16px 12px;
+padding: 14px 10px;
 background: var(–white);
 overflow: hidden;
 }
 
 .preview-label {
-font-size: 0.68rem;
+font-size: 0.65rem;
 font-weight: 700;
 color: var(–muted);
 letter-spacing: 0.1em;
 text-transform: uppercase;
 }
 
+.canvas-wrap {
+flex: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+overflow: hidden;
+padding: 6px 0;
+}
+
 #cv {
 border-radius: 10px;
 background: #f0f0ea;
-max-height: calc(100dvh - 100px);
-width: 100%;
-max-width: 280px;
-object-fit: contain;
+/* canvasの表示サイズは JS で設定 */
+display: block;
 }
 
 .save-btn {
 width: 100%;
-max-width: 280px;
 padding: 14px;
 background: var(–accent);
 color: #fff;
 border: none;
 border-radius: 12px;
 font-family: inherit;
-font-size: 0.9rem;
+font-size: 0.88rem;
 font-weight: 700;
 cursor: pointer;
 transition: opacity 0.2s;
+flex-shrink: 0;
 }
 .save-btn:active { opacity: 0.7; }
 
-/* ─── カード ─── */
+/* カード */
 .card {
 background: var(–white);
 border-radius: var(–radius);
-padding: 16px;
-margin-bottom: 12px;
+padding: 14px 16px;
+margin-bottom: 10px;
 box-shadow: 0 1px 5px rgba(0,0,0,0.06);
 }
-
 .card-title {
-font-size: 0.68rem;
+font-size: 0.67rem;
 font-weight: 700;
 color: var(–muted);
 letter-spacing: 0.1em;
 text-transform: uppercase;
 margin-bottom: 14px;
 }
-
 .section-label {
-font-size: 0.75rem;
+font-size: 0.73rem;
 color: var(–muted);
-margin: 14px 0 10px;
+margin: 12px 0 8px;
 padding-bottom: 4px;
 border-bottom: 1px solid var(–border);
 }
-.section-label:first-child { margin-top: 0; }
+.section-label:first-of-type { margin-top: 0; }
 
-/* ─── フィールド（ラベル＋数値＋スライダー） ─── */
-.field { margin-bottom: 16px; }
+/* フィールド */
+.field { margin-bottom: 14px; }
 
 .field-top {
 display: flex;
 align-items: center;
-gap: 10px;
-margin-bottom: 8px;
+gap: 8px;
+margin-bottom: 10px;
 }
-
 .field-top label {
 flex: 1;
-font-size: 0.88rem;
+font-size: 0.86rem;
 color: var(–text);
 line-height: 1.3;
 }
-
-.num-wrap {
-display: flex;
-align-items: center;
-gap: 4px;
-flex-shrink: 0;
-}
+.num-wrap { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
 
 input[type=“number”] {
-width: 80px;
-font-size: 1.15rem;
+width: 78px;
+font-size: 1.1rem;
 font-weight: 700;
 color: var(–accent);
 border: 2px solid var(–border);
 border-radius: 10px;
-padding: 8px 10px;
+padding: 7px 8px;
 outline: none;
 background: var(–white);
 -webkit-appearance: none;
@@ -181,54 +171,48 @@ appearance: none;
 text-align: right;
 transition: border-color 0.2s;
 }
-input[type=“number”]:focus {
-border-color: var(–accent);
-background: var(–accent-light);
+input[type=“number”]:focus { border-color: var(–accent); background: var(–accent-light); }
+
+.unit { font-size: 0.8rem; color: var(–muted); min-width: 22px; }
+
+/* スライダー：トラック全幅・大きなつまみ */
+.slider-wrap {
+width: 100%;
+padding: 4px 0 2px;
 }
 
-.unit {
-font-size: 0.82rem;
-color: var(–muted);
-min-width: 24px;
-}
-
-/* ─── スライダー ─── */
 input[type=“range”] {
 width: 100%;
-height: 6px;
+height: 8px;
 -webkit-appearance: none;
 appearance: none;
-background: var(–border);
-border-radius: 3px;
+background: linear-gradient(to right, var(–accent) 0%, var(–accent) var(–pct, 50%), var(–border) var(–pct, 50%), var(–border) 100%);
+border-radius: 4px;
 outline: none;
 cursor: pointer;
+display: block;
 }
 input[type=“range”]::-webkit-slider-thumb {
 -webkit-appearance: none;
-width: 32px;
-height: 32px;
+width: 34px;
+height: 34px;
 border-radius: 50%;
 background: var(–accent);
 border: 4px solid var(–white);
-box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+box-shadow: 0 2px 8px rgba(0,0,0,0.22);
 cursor: pointer;
 }
 
-/* ─── トグルボタン ─── */
-.btn-row {
-display: flex;
-gap: 8px;
-margin-bottom: 10px;
-}
-
+/* トグルボタン */
+.btn-row { display: flex; gap: 8px; margin-bottom: 8px; }
 .tog-btn {
 flex: 1;
-padding: 12px 8px;
+padding: 12px 6px;
 border-radius: 10px;
 border: 2px solid var(–border);
 background: var(–white);
 font-family: inherit;
-font-size: 0.82rem;
+font-size: 0.8rem;
 color: var(–muted);
 cursor: pointer;
 text-align: center;
@@ -243,77 +227,32 @@ color: var(–accent);
 font-weight: 700;
 }
 
-.hint {
-font-size: 0.7rem;
-color: var(–muted);
-line-height: 1.5;
-margin-top: 4px;
-margin-bottom: 8px;
-}
+.hint { font-size: 0.68rem; color: var(–muted); line-height: 1.5; margin: 4px 0 6px; }
 
-/* ─── 結果 ─── */
-.seg-list { display: flex; flex-direction: column; gap: 7px; }
-
+/* 結果 */
+.seg-list { display: flex; flex-direction: column; gap: 6px; }
 .seg-item {
-display: flex;
-align-items: center;
-gap: 10px;
-background: var(–bg);
-border-radius: 10px;
-padding: 9px 12px;
+display: flex; align-items: center; gap: 8px;
+background: var(–bg); border-radius: 10px; padding: 8px 12px;
 }
-.seg-label {
-font-size: 0.75rem;
-color: var(–muted);
-width: 60px;
-flex-shrink: 0;
-}
-.seg-value {
-font-size: 1.05rem;
-font-weight: 700;
-color: var(–accent);
-width: 68px;
-text-align: right;
-flex-shrink: 0;
-}
-.seg-unit {
-font-size: 0.72rem;
-color: var(–muted);
-flex-shrink: 0;
-}
-.seg-bar-wrap {
-flex: 1;
-background: var(–border);
-border-radius: 4px;
-height: 8px;
-overflow: hidden;
-}
-.seg-bar {
-height: 100%;
-border-radius: 4px;
-background: linear-gradient(90deg, var(–accent), #4aaa80);
-transition: width 0.2s;
-}
+.seg-label  { font-size: 0.73rem; color: var(–muted); width: 56px; flex-shrink: 0; }
+.seg-value  { font-size: 1rem; font-weight: 700; color: var(–accent); width: 66px; text-align: right; flex-shrink: 0; }
+.seg-unit   { font-size: 0.7rem; color: var(–muted); flex-shrink: 0; }
+.seg-bar-wrap { flex: 1; background: var(–border); border-radius: 3px; height: 7px; overflow: hidden; }
+.seg-bar    { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(–accent), #4aaa80); transition: width 0.2s; }
 
 .total-row {
-display: flex;
-justify-content: flex-end;
-font-size: 0.78rem;
-color: var(–muted);
-margin-top: 8px;
-padding-top: 8px;
+display: flex; justify-content: flex-end;
+font-size: 0.75rem; color: var(–muted);
+margin-top: 8px; padding-top: 8px;
 border-top: 1px solid var(–border);
 }
 .total-row span { color: var(–accent); font-weight: 700; margin-left: 4px; }
 
 .error {
-font-size: 0.8rem;
-color: #c0392b;
-padding: 8px 12px;
-background: #fdecea;
-border-radius: 8px;
-display: none;
-margin-bottom: 8px;
+font-size: 0.78rem; color: #c0392b;
+padding: 8px 12px; background: #fdecea;
+border-radius: 8px; display: none; margin-bottom: 8px;
 }
 </style>
 
@@ -322,7 +261,7 @@ margin-bottom: 8px;
 
 <div class="layout">
 
-  <!-- ─── 左パネル：入力 ─── -->
+  <!-- 左：入力 -->
 
   <div class="panel-left">
     <div class="panel-header">
@@ -333,7 +272,6 @@ margin-bottom: 8px;
 ```
 <div class="scroll-area">
 
-  <!-- 入力カード -->
   <div class="card">
     <div class="card-title">入力</div>
 
@@ -347,7 +285,9 @@ margin-bottom: 8px;
           <span class="unit">mm</span>
         </div>
       </div>
-      <input type="range" id="totalLenR" min="10" max="2000" step="1" value="200">
+      <div class="slider-wrap">
+        <input type="range" id="totalLenR" min="10" max="2000" step="1" value="200">
+      </div>
     </div>
 
     <div class="field">
@@ -358,29 +298,35 @@ margin-bottom: 8px;
           <span class="unit">段</span>
         </div>
       </div>
-      <input type="range" id="numSegR" min="2" max="30" step="1" value="8">
+      <div class="slider-wrap">
+        <input type="range" id="numSegR" min="2" max="30" step="1" value="8">
+      </div>
     </div>
 
     <div class="field">
       <div class="field-top">
         <label>下端の幅</label>
         <div class="num-wrap">
-          <input type="number" id="widthBottom" value="100" min="1" max="500" step="1">
+          <input type="number" id="widthBottom" value="60" min="1" max="2000" step="1">
           <span class="unit">mm</span>
         </div>
       </div>
-      <input type="range" id="widthBottomR" min="1" max="500" step="1" value="100">
+      <div class="slider-wrap">
+        <input type="range" id="widthBottomR" min="1" max="2000" step="1" value="60">
+      </div>
     </div>
 
     <div class="field">
       <div class="field-top">
         <label>上端の幅</label>
         <div class="num-wrap">
-          <input type="number" id="widthTop" value="20" min="0" max="500" step="1">
+          <input type="number" id="widthTop" value="10" min="0" max="2000" step="1">
           <span class="unit">mm</span>
         </div>
       </div>
-      <input type="range" id="widthTopR" min="0" max="500" step="1" value="20">
+      <div class="slider-wrap">
+        <input type="range" id="widthTopR" min="0" max="2000" step="1" value="10">
+      </div>
     </div>
 
     <div class="section-label">▸ くびれ設定</div>
@@ -398,17 +344,21 @@ margin-bottom: 8px;
             <span class="unit">段</span>
           </div>
         </div>
-        <input type="range" id="waistSegR" min="1" max="29" step="1" value="3">
+        <div class="slider-wrap">
+          <input type="range" id="waistSegR" min="1" max="29" step="1" value="3">
+        </div>
       </div>
       <div class="field">
         <div class="field-top">
           <label>くびれの幅</label>
           <div class="num-wrap">
-            <input type="number" id="waistWidth" value="15" min="1" max="500" step="1">
+            <input type="number" id="waistWidth" value="10" min="1" max="2000" step="1">
             <span class="unit">mm</span>
           </div>
         </div>
-        <input type="range" id="waistWidthR" min="1" max="500" step="1" value="15">
+        <div class="slider-wrap">
+          <input type="range" id="waistWidthR" min="1" max="2000" step="1" value="10">
+        </div>
       </div>
     </div>
   </div>
@@ -428,10 +378,11 @@ margin-bottom: 8px;
           <label>縮小比率</label>
           <div class="num-wrap">
             <input type="number" id="ratio" value="0.85" min="0.50" max="0.99" step="0.01">
-            <span class="unit"></span>
           </div>
         </div>
-        <input type="range" id="ratioR" min="50" max="99" step="1" value="85">
+        <div class="slider-wrap">
+          <input type="range" id="ratioR" min="50" max="99" step="1" value="85">
+        </div>
         <div class="hint">上の段 = 下の段 × 比率（0.85 → 85%）</div>
       </div>
     </div>
@@ -441,11 +392,12 @@ margin-bottom: 8px;
         <div class="field-top">
           <label>最上段 ÷ 最下段</label>
           <div class="num-wrap">
-            <input type="number" id="linearRatio" value="0.40" min="0.10" max="0.90" step="0.01">
-            <span class="unit"></span>
+            <input type="number" id="linearRatio" value="0.40" min="0.01" max="0.99" step="0.01">
           </div>
         </div>
-        <input type="range" id="linearRatioR" min="10" max="90" step="1" value="40">
+        <div class="slider-wrap">
+          <input type="range" id="linearRatioR" min="1" max="99" step="1" value="40">
+        </div>
         <div class="hint">0.4 → 最上段は最下段の 40% の長さ</div>
       </div>
     </div>
@@ -459,20 +411,22 @@ margin-bottom: 8px;
     <div class="total-row">合計<span id="totalDisplay">—</span> mm</div>
   </div>
 
-</div><!-- /scroll-area -->
+</div>
 ```
 
-  </div><!-- /panel-left -->
+  </div>
 
-  <!-- ─── 右パネル：プレビュー ─── -->
+  <!-- 右：プレビュー -->
 
   <div class="panel-right">
     <div class="preview-label">Preview</div>
-    <canvas id="cv" width="540" height="1600"></canvas>
+    <div class="canvas-wrap">
+      <canvas id="cv"></canvas>
+    </div>
     <button class="save-btn" id="saveBtn">📥 PNG 保存</button>
   </div>
 
-</div><!-- /layout -->
+</div>
 
 <script>
   let mode     = 'linear';
@@ -489,8 +443,10 @@ margin-bottom: 8px;
   ].forEach(([nid, rid]) => {
     const n = document.getElementById(nid);
     const r = document.getElementById(rid);
-    n.addEventListener('input', () => { r.value = n.value; calc(); });
-    r.addEventListener('input', () => { n.value = r.value; calc(); });
+    const update = () => updateSliderTrack(r);
+    n.addEventListener('input', () => { r.value = n.value; update(); calc(); });
+    r.addEventListener('input', () => { n.value = r.value; update(); calc(); });
+    update();
   });
 
   // ── スライダー↔数値 同期（小数×100） ──────────
@@ -500,9 +456,17 @@ margin-bottom: 8px;
   ].forEach(([nid, rid]) => {
     const n = document.getElementById(nid);
     const r = document.getElementById(rid);
-    n.addEventListener('input', () => { r.value = Math.round(parseFloat(n.value) * 100); calc(); });
-    r.addEventListener('input', () => { n.value = (parseInt(r.value) / 100).toFixed(2); calc(); });
+    const update = () => updateSliderTrack(r);
+    n.addEventListener('input', () => { r.value = Math.round(parseFloat(n.value) * 100); update(); calc(); });
+    r.addEventListener('input', () => { n.value = (parseInt(r.value) / 100).toFixed(2); update(); calc(); });
+    update();
   });
+
+  // スライダーのトラック色（塗り済み部分）を更新
+  function updateSliderTrack(r) {
+    const pct = ((r.value - r.min) / (r.max - r.min) * 100).toFixed(1) + '%';
+    r.style.setProperty('--pct', pct);
+  }
 
   // ── くびれボタン ──────────────────────────────
   document.getElementById('btnWaistNone').addEventListener('click', () => {
@@ -549,7 +513,6 @@ margin-bottom: 8px;
     if (!total || total <= 0) { errEl.style.display = 'block'; return; }
     errEl.style.display = 'none';
 
-    // くびれスライダー最大値を段数に合わせる
     const wsR = document.getElementById('waistSegR');
     const wsN = document.getElementById('waistSeg');
     wsR.max = n - 1;
@@ -568,7 +531,6 @@ margin-bottom: 8px;
       for (let i = 0; i < n; i++) heights.push(a - d * i);
     }
 
-    // テーブル
     const list = document.getElementById('segList');
     list.innerHTML = '';
     const maxH = heights[0];
@@ -590,38 +552,63 @@ margin-bottom: 8px;
     drawPreview(heights, n);
   }
 
-  // ── プレビュー描画 ────────────────────────────
+  // ── プレビュー描画（canvasは固定、描画だけスケール） ────────
   function drawPreview(heights, n) {
     const cv  = document.getElementById('cv');
     const ctx = cv.getContext('2d');
-    const pw  = cv.width, ph = cv.height;
-    ctx.clearRect(0, 0, pw, ph);
 
-    const pad    = 30;
-    const total  = heights.reduce((a, b) => a + b, 0);
-    const scaleY = (ph - pad * 2) / total;
-
-    const wBottom  = parseFloat(document.getElementById('widthBottom').value) || 100;
-    const wTop     = parseFloat(document.getElementById('widthTop').value)    || 20;
-    const waistWmm = hasWaist ? (parseFloat(document.getElementById('waistWidth').value) || 15) : 0;
+    const wBottom  = parseFloat(document.getElementById('widthBottom').value) || 60;
+    const wTop     = parseFloat(document.getElementById('widthTop').value)    || 10;
+    const waistWmm = hasWaist ? (parseFloat(document.getElementById('waistWidth').value) || 10) : 0;
     const waistAt  = hasWaist
       ? Math.min(n - 1, Math.max(1, parseInt(document.getElementById('waistSeg').value) || 3))
       : 0;
 
-    // 各境界のY座標を事前計算
-    const boundaryY = [ph - pad];
-    for (let i = 0; i < n; i++) {
-      boundaryY.push(boundaryY[i] - heights[i] * scaleY);
-    }
-    const totalPx = ph - pad * 2;
+    const totalH = heights.reduce((a, b) => a + b, 0); // mm
+    const totalW = Math.max(wBottom, wTop, hasWaist ? waistWmm : 0); // mm
 
-    // Y座標から幅(mm)を返す
+    // canvasは固定サイズ（CSSで決まる表示サイズに合わせて解像度だけ設定）
+    const wrap = document.querySelector('.canvas-wrap');
+    const dpr  = window.devicePixelRatio || 2;
+    const dispW = wrap.clientWidth  - 8;
+    const dispH = wrap.clientHeight - 8;
+
+    cv.style.width  = dispW + 'px';
+    cv.style.height = dispH + 'px';
+    cv.width  = dispW * dpr;
+    cv.height = dispH * dpr;
+    ctx.scale(dpr, dpr);
+
+    const pw = dispW;
+    const ph = dispH;
+
+    ctx.clearRect(0, 0, pw, ph);
+
+    const pad = 24;
+    // 縦は常にcanvas全体を使う、横は数値の比率に応じて変わる
+    const scale = (ph - pad * 2) / totalH;
+
+    // 描画を中央に配置するためのオフセット
+    const drawW  = totalW * scale;
+    const drawH  = totalH * scale;
+    const offsetX = (pw - drawW) / 2;
+    const offsetY = (ph - drawH) / 2;
+
+    // 各境界のY座標(px)を事前計算（下端から積み上げ）
+    const baseY = offsetY + drawH; // 最下端のY座標
+    const boundaryY = [baseY];
+    for (let i = 0; i < n; i++) {
+      boundaryY.push(boundaryY[i] - heights[i] * scale);
+    }
+    const totalPx = drawH;
+
+    // Y座標(px)から幅(mm)を返す
     function widthAtY(y) {
-      const t = (ph - pad - y) / totalPx; // 0=最下端, 1=最上端
+      const t = (baseY - y) / totalPx; // 0=最下端, 1=最上端
       if (!hasWaist) {
         return wBottom + (wTop - wBottom) * t;
       }
-      const tWaist = (ph - pad - boundaryY[waistAt]) / totalPx;
+      const tWaist = (baseY - boundaryY[waistAt]) / totalPx;
       if (t <= tWaist) {
         return wBottom + (waistWmm - wBottom) * (t / tWaist);
       } else {
@@ -629,15 +616,13 @@ margin-bottom: 8px;
       }
     }
 
-    const wMax   = Math.max(wBottom, wTop, hasWaist ? waistWmm : 0);
-    const wScale = (pw - pad * 2) / wMax;
     const cx = pw / 2;
-    let y = ph - pad;
+    let y = baseY;
 
     heights.forEach((h, i) => {
-      const segH = h * scaleY;
-      const bw   = widthAtY(boundaryY[i])     * wScale;
-      const tw   = widthAtY(boundaryY[i + 1]) * wScale;
+      const segH = h * scale;
+      const bw   = widthAtY(boundaryY[i])     * scale;
+      const tw   = widthAtY(boundaryY[i + 1]) * scale;
 
       ctx.beginPath();
       ctx.moveTo(cx - bw/2, y);
@@ -646,7 +631,7 @@ margin-bottom: 8px;
       ctx.lineTo(cx - tw/2, y - segH);
       ctx.closePath();
       ctx.strokeStyle = '#1a6b4a';
-      ctx.lineWidth = 8;
+      ctx.lineWidth = 2.5;
       ctx.stroke();
 
       ctx.beginPath();
@@ -655,20 +640,23 @@ margin-bottom: 8px;
       ctx.moveTo(cx + bw/2, y);
       ctx.lineTo(cx - tw/2, y - segH);
       ctx.strokeStyle = '#aacfbe';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 1.2;
       ctx.stroke();
 
       y -= segH;
     });
   }
 
-  // ── 保存 ──────────────────────────────────────
+  // ── 保存（高解像度で書き出し） ─────────────────
   document.getElementById('saveBtn').addEventListener('click', () => {
     const link = document.createElement('a');
     link.download = 'tower-preview.png';
     link.href = document.getElementById('cv').toDataURL('image/png');
     link.click();
   });
+
+  // ウィンドウリサイズ時に再描画
+  window.addEventListener('resize', calc);
 
   calc();
 </script>
