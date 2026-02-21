@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>鉄塔 段割り計算</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap');
+
+  :root {
+    --bg: #f5f4f0;
+    --white: #ffffff;
+    --accent: #1a6b4a;
+    --accent-light: #e8f5ee;
+    --text: #1a1a1a;
+    --muted: #888;
+    --border: #ddd;
+    --seg-color: #1a6b4a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 20px 16px 40px;
+  }
+
+  h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+
+  .card h2 {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .input-row label {
+    font-size: 0.85rem;
+    width: 140px;
+    flex-shrink: 0;
+    color: var(--text);
+  }
+
+  .input-row input[type="number"] {
+    flex: 1;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    outline: none;
+    background: var(--white);
+    -webkit-appearance: none;
+    appearance: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-row input[type="number"]:focus {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .unit {
+    font-size: 0.85rem;
+    color: var(--muted);
+    width: 28px;
+  }
+
+  .mode-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .mode-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 8px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    background: var(--white);
+    font-family: inherit;
+    font-size: 0.82rem;
+    color: var(--muted);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+
+  .mode-btn.active {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .mode-hint {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+
+  .result-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .result-header h2 {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+
+  .total-check {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  .total-check span {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .seg-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .seg-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+
+  .seg-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    width: 64px;
+    flex-shrink: 0;
+  }
+
+  .seg-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent);
+    width: 72px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .seg-unit {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-left: 2px;
+    flex-shrink: 0;
+  }
+
+  .seg-bar-wrap {
+    flex: 1;
+    background: var(--border);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .seg-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), #4aaa80);
+    transition: width 0.3s;
+  }
+
+  .preview-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0 4px;
+  }
+
+  canvas {
+    border-radius: 8px;
+    background: #f0f0ea;
+  }
+
+  .save-btn {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s;
+  }
+  .save-btn:active { opacity: 0.7; }
+
+  .error {
+    color: #c0392b;
+    font-size: 0.82rem;
+    padding: 10px 14px;
+    background: #fdecea;
+    border-radius: 8px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>⚡ 段割り計算ツール</h1>
+<div class="subtitle">線の長さを指定した段数に分割します</div>
+
+<div class="card">
+  <h2>入力</h2>
+  <div class="input-row">
+    <label>線の全体の長さ</label>
+    <input type="number" id="totalLen" value="200" min="1" step="0.1">
+    <span class="unit">mm</span>
+  </div>
+  <div class="input-row">
+    <label>分割する段数</label>
+    <input type="number" id="numSeg" value="8" min="2" max="30" step="1">
+    <span class="unit">段</span>
+  </div>
+  <div class="input-row">
+    <label>下端の幅</label>
+    <input type="number" id="widthBottom" value="100" min="1" step="0.1">
+    <span class="unit">mm</span>
+  </div>
+  <div class="input-row">
+    <label>上端の幅</label>
+    <input type="number" id="widthTop" value="20" min="0" step="0.1">
+    <span class="unit">mm</span>
+  </div>
+</div>
+
+<div class="card">
+  <h2>間隔の変化パターン</h2>
+  <div class="mode-row">
+    <button class="mode-btn" data-mode="ratio">等比（自然な縮み）</button>
+    <button class="mode-btn active" data-mode="linear">等差（均等に縮小）</button>
+  </div>
+  <div class="mode-hint" id="modeHint">
+    段ごとに一定の長さずつ均等に小さくなります。<br>なだらかで規則的な見た目になります。
+  </div>
+
+  <div style="margin-top:14px;display:none" id="ratioInput">
+    <div class="input-row">
+      <label>縮小比率</label>
+      <input type="number" id="ratio" value="0.85" min="0.5" max="0.99" step="0.01">
+      <span class="unit"></span>
+    </div>
+    <div class="mode-hint">上の段 = 下の段 × この比率<br>例：0.85 なら上の段は下の段の 85% の長さ</div>
+  </div>
+
+  <div style="margin-top:14px" id="linearInput">
+    <div class="input-row">
+      <label>最上段 / 最下段</label>
+      <input type="number" id="linearRatio" value="0.4" min="0.1" max="0.9" step="0.05">
+      <span class="unit"></span>
+    </div>
+    <div class="mode-hint">一番上の段が一番下の段の何倍か<br>例：0.4 なら最上段は最下段の 40% の長さ</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="result-header">
+    <h2>計算結果（下から順）</h2>
+    <div class="total-check">合計 <span id="totalDisplay">—</span> mm</div>
+  </div>
+  <div class="error" id="errorMsg">値を確認してください</div>
+  <div class="seg-list" id="segList"></div>
+</div>
+
+<div class="card">
+  <h2>プレビュー</h2>
+  <div class="preview-wrap">
+    <canvas id="cv" width="400" height="1200" style="width:100px;height:300px;"></canvas>
+  </div>
+  <button class="save-btn" id="saveBtn">📥 画像として保存（PNG）</button>
+</div>
+
+<script>
+  let mode = 'linear';
+
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      document.getElementById('ratioInput').style.display = mode === 'ratio' ? '' : 'none';
+      document.getElementById('linearInput').style.display = mode === 'linear' ? '' : 'none';
+      document.getElementById('modeHint').textContent = mode === 'ratio'
+        ? '上の段が下の段の一定比率で小さくなります。\n実際の鉄塔に近い自然な見た目になりやすいです。'
+        : '段ごとに一定の長さずつ均等に小さくなります。\nなだらかで規則的な見た目になります。';
+      calc();
+    });
+  });
+
+  ['totalLen','numSeg','ratio','linearRatio','widthBottom','widthTop'].forEach(id => {
+    document.getElementById(id).addEventListener('input', calc);
+  });
+
+  function calc() {
+    const total = parseFloat(document.getElementById('totalLen').value);
+    const n = Math.min(30, Math.max(2, parseInt(document.getElementById('numSeg').value)));
+    const errEl = document.getElementById('errorMsg');
+
+    if (!total || total <= 0 || !n) { errEl.style.display = 'block'; return; }
+    errEl.style.display = 'none';
+
+    let heights = [];
+
+    if (mode === 'ratio') {
+      const r = parseFloat(document.getElementById('ratio').value) || 0.85;
+      if (r >= 1 || r <= 0) return;
+      const a = total * (1 - r) / (1 - Math.pow(r, n));
+      for (let i = 0; i < n; i++) heights.push(a * Math.pow(r, i));
+    } else {
+      const lr = parseFloat(document.getElementById('linearRatio').value) || 0.4;
+      const a = total / (n * (1 - (1 - lr) / 2));
+      const d = a * (1 - lr) / (n - 1);
+      for (let i = 0; i < n; i++) heights.push(a - d * i);
+    }
+
+    const list = document.getElementById('segList');
+    list.innerHTML = '';
+    const maxH = heights[0];
+    let sum = 0;
+
+    heights.forEach((h, i) => {
+      sum += h;
+      const pct = (h / maxH * 100).toFixed(0);
+      const div = document.createElement('div');
+      div.className = 'seg-item';
+      div.innerHTML = `
+        <div class="seg-label">第${i+1}段目</div>
+        <div class="seg-value">${h.toFixed(2)}</div>
+        <div class="seg-unit">mm</div>
+        <div class="seg-bar-wrap"><div class="seg-bar" style="width:${pct}%"></div></div>
+      `;
+      list.appendChild(div);
+    });
+
+    document.getElementById('totalDisplay').textContent = sum.toFixed(2);
+
+    const cv = document.getElementById('cv');
+    const ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    const pw = cv.width, ph = cv.height;
+    const pad = 10;
+    const scaleY = (ph - pad*2) / total;
+
+    const wBottom = parseFloat(document.getElementById('widthBottom').value) || 100;
+    const wTop    = parseFloat(document.getElementById('widthTop').value)    || 20;
+    const wMax = Math.max(wBottom, wTop);
+    const canvasMaxW = pw - 8;
+    const wScale = canvasMaxW / wMax;
+    const maxW = wBottom * wScale;
+    const minW = wTop * wScale;
+
+    const getWidth = (yPos) => {
+      const t = (yPos - pad) / (ph - pad * 2);
+      return minW + (maxW - minW) * t;
+    };
+
+    const cx = pw / 2;
+    let y = ph - pad;
+    heights.forEach((h) => {
+      const segH = h * scaleY;
+      const bw = getWidth(y);
+      const tw = getWidth(y - segH);
+
+      ctx.beginPath();
+      ctx.moveTo(cx - bw/2, y);
+      ctx.lineTo(cx + bw/2, y);
+      ctx.lineTo(cx + tw/2, y - segH);
+      ctx.lineTo(cx - tw/2, y - segH);
+      ctx.closePath();
+      ctx.strokeStyle = '#1a6b4a';
+      ctx.lineWidth = 6;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(cx - bw/2, y);
+      ctx.lineTo(cx + tw/2, y - segH);
+      ctx.moveTo(cx + bw/2, y);
+      ctx.lineTo(cx - tw/2, y - segH);
+      ctx.strokeStyle = '#aacfbe';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      y -= segH;
+    });
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    const cv = document.getElementById('cv');
+    const link = document.createElement('a');
+    link.download = 'tower-preview.png';
+    link.href = cv.toDataURL('image/png');
+    link.click();
+  });
+
+  calc();
+</script>
+</body>
+</html>
